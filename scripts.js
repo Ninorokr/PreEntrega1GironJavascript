@@ -7,19 +7,20 @@ main()
 
 function main() {
     let precioTotal = 0.00
-    let manzanas = "manzanas"
-    let naranjas = "naranjas"
-    let papayas = "papayas"
-    let platanos = "platanos"
+
+    let precioManzana = 1.00
+    let precioNaranja = 1.50
+    let precioPapaya = 2.00
+    let precioPlatano = 0.50
     
     let bucle = true;
     do {
         let inputUsuario = elegirDelMenu(precioTotal)
         switch (inputUsuario) {
-            case 1: precioTotal = agregarManzanas(precioTotal); break;
-            case 2: precioTotal = agregarNaranjas(precioTotal); break;
-            case 3: precioTotal = agregarPapayas(precioTotal); break;
-            case 4: precioTotal = agregarPlatanos(precioTotal); break;
+            case 1: precioTotal = agregarProducto(precioTotal, "manzanas", precioManzana); break;
+            case 2: precioTotal = agregarProducto(precioTotal, "naranjas", precioNaranja); break;
+            case 3: precioTotal = agregarProducto(precioTotal, "papayas", precioPapaya); break;
+            case 4: precioTotal = agregarProducto(precioTotal, "plátanos", precioPlatano); break;
             case 0: bucle = false;
         }
     } while (bucle)
@@ -40,7 +41,30 @@ function elegirDelMenu(precioTotal) {
     return eleccion
 }
 
-function agregarManzanas(precioTotal) {
+function agregarProducto(precioTotal, producto, precioUnitario) {
+    let todoBien = false
+    let cantidad = 0
+
+    while (!todoBien) {
+        todoBien = true
+        cantidad = Number(prompt("¿Cuántas " + producto + " desea agregar?"))
+
+        if (cantidad < 0 || isNaN(cantidad)) {
+            alert("Debe ingresar un número mayor o igual a 0")
+            todoBien = false
+        }
+    }
+
+    precioTotal += cantidad * precioUnitario
+    return precioTotal
+}
+
+function noEsNumero(valor) {
+    return typeof valor !== 'number'
+}
+
+//CODIGO FUNADO 💀
+/* function agregarManzanas(precioTotal) {
     let todoBien = false
     let cantidadManzanas = 0
 
@@ -110,8 +134,4 @@ function agregarPlatanos(precioTotal) {
 
     precioTotal += cantidadPlatanos * 0.50
     return precioTotal
-}
-
-function noEsNumero(valor) {
-    return typeof valor !== 'number'
-}
+} */
