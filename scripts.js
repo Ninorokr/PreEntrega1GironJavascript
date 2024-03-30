@@ -59,10 +59,6 @@ function agregarProducto(precioTotal, producto, precioUnitario) {
     return precioTotal
 }
 
-function noEsNumero(valor) {
-    return typeof valor !== 'number'
-}
-
 //CODIGO FUNADO 💀
 /* function agregarManzanas(precioTotal) {
     let todoBien = false
@@ -134,4 +130,8 @@ function agregarPlatanos(precioTotal) {
 
     precioTotal += cantidadPlatanos * 0.50
     return precioTotal
+} 
+
+function noEsNumero(valor) {
+    return typeof valor !== 'number'
 } */
