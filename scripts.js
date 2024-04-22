@@ -3,51 +3,85 @@
 //Cada uno tiene su precio y se puede indicar la cantidad a llevar
 //2. Acumular el monto total en una variable (float)
 
+let manzana = {
+    id: 1,
+    nombre: "Manzanas",
+    peso: 0.200,
+    precio: 1.00
+}
+
+let naranja = {
+    id: 2,
+    nombre: "Naranjas",
+    peso: 0.180,
+    precio: 0.60
+}
+
+let papaya = {
+    id: 3,
+    nombre: "Papayas",
+    peso: 2.000,
+    precio: 2.00
+}
+
+let platano = {
+    id: 4,
+    nombre: "Plátanos",
+    peso: 0.150,
+    precio: 0.50
+}
+
 main()
 
 function main() {
-    let precioTotal = 0.00
-
-    let precioManzana = 1.00
-    let precioNaranja = 1.50
-    let precioPapaya = 2.00
-    let precioPlatano = 0.50
+    let catalogo = [manzana, naranja, papaya, platano]
+    let carrito = []
     
     let bucle = true;
+
     do {
-        let inputUsuario = elegirDelMenu(precioTotal)
-        switch (inputUsuario) {
-            case 1: precioTotal = agregarProducto(precioTotal, "manzanas", precioManzana); break;
-            case 2: precioTotal = agregarProducto(precioTotal, "naranjas", precioNaranja); break;
-            case 3: precioTotal = agregarProducto(precioTotal, "papayas", precioPapaya); break;
-            case 4: precioTotal = agregarProducto(precioTotal, "plátanos", precioPlatano); break;
-            case 0: bucle = false;
-        }
+        let inputUsuario = elegirDelMenu(catalogo)
+        agregarProductoAlCarrito(inputUsuario, carrito, catalogo)
+        console.table(carrito)
     } while (bucle)
 
     alert("¡Gracias por comprar con nosotros!")
 }
 
-function elegirDelMenu(precioTotal) {
-    let menu = "Elige un producto a agregar al carrito:\n" +
-                "1. Manzanas\t\tS/. 1.00\n" + 
-                "2. Naranjas\t\tS/. 1.50\n" + 
-                "3. Papayas\t\tS/. 2.00\n" + 
-                "4. Plátanos\t\tS/. 0.50\n" +
-                "0. Salir\n\n" +
-                "El total a pagar es: " + precioTotal + " soles"
+function elegirDelMenu(catalogo) {
+    let menu = "Elige un producto a agregar al carrito:\n"
 
-    let eleccion = Number(prompt(menu))
+    catalogo.forEach((prod) => {
+        menu += prod.id + ". " + prod.nombre + "\t\tS/. " + prod.precio + "\n"
+    })
+
+    /* menu += "0. Salir\n\n" +
+    "El total a pagar es: " + precioTotal(carrito) + " soles" */
+
+    let todoBien = false
+    let eleccion = -1
+
+    while (!todoBien){
+        todoBien = true
+        eleccion = Number(prompt(menu))
+
+        if (eleccion < 0 || eleccion > catalogo.length || isNaN(eleccion)) {
+            alert("Opción incorrecta")
+            todoBien = false
+        }
+    }
+
     return eleccion
 }
 
-function agregarProducto(precioTotal, producto, precioUnitario) {
+function agregarProductoAlCarrito(inputUsuario, carrito, catalogo) {
+
     let todoBien = false
     let cantidad = 0
 
     while (!todoBien) {
         todoBien = true
-        cantidad = Number(prompt("¿Cuántas " + producto + " desea agregar?"))
+        cantidad = Number(prompt("¿Cuántos desea agregar?"))
 
         if (cantidad < 0 || isNaN(cantidad)) {
             alert("Debe ingresar un número mayor o igual a 0")
@@ -55,8 +89,36 @@ function agregarProducto(precioTotal, producto, precioUnitario) {
         }
     }
 
-    precioTotal += cantidad * precioUnitario
-    return precioTotal
+    let item = carrito.find((producto) => producto["id"] == inputUsuario)
+    
+    //BUSCAR ITEM EN EL CARRITO
+    if (!(item == undefined)) {
+        // SI EL PRODUCTO YA ESTÁ EN EL CARRITO, AUMENTAR CANTIDAD
+        item.cantidad += cantidad
+    } else {
+        // SI EL PRODUCTO NO ESTÁ EN EL CARRITO, AGREGAR PRODUCTO
+        console.log("idProducto = " + inputUsuario)
+        item = catalogo.find((producto) => producto["id"] == inputUsuario)
+        //let nuevoItem = nuevoItemAgregado(item, cantidad)
+        item.cantidad = cantidad
+        carrito.push(item)
+    }
+
+}
+
+function nuevoItemAgregado(item, cantidad) {
+    //Esta funcion agrega propiedades al item agregado al carrito
+    item.cantidad = cantidad
+}
+
+function precioTotal(carrito) {
+    if (carrito.length == 0) {
+        return 0
+    } else {
+        let sumaPrecios = 0
+        carrito.forEach((producto) => sumaPrecios += producto.precio)
+        return sumaPrecios
+    }
 }
 
 //CODIGO FUNADO 💀
