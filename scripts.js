@@ -40,23 +40,28 @@ function main() {
     let bucle = true;
 
     do {
-        let inputUsuario = elegirDelMenu(catalogo)
-        agregarProductoAlCarrito(inputUsuario, carrito, catalogo)
-        console.table(carrito)
+        let inputUsuario = elegirDelMenu(catalogo, carrito)
+
+        if (inputUsuario == 0) {
+            bucle = false
+        } else {
+            agregarProductoAlCarrito(inputUsuario, carrito, catalogo)
+            console.table(carrito)
+        }
     } while (bucle)
 
     alert("¡Gracias por comprar con nosotros!")
 }
 
-function elegirDelMenu(catalogo) {
+function elegirDelMenu(catalogo, carrito) {
     let menu = "Elige un producto a agregar al carrito:\n"
 
     catalogo.forEach((prod) => {
         menu += prod.id + ". " + prod.nombre + "\t\tS/. " + prod.precio + "\n"
     })
 
-    /* menu += "0. Salir\n\n" +
-    "El total a pagar es: " + precioTotal(carrito) + " soles" */
+    menu += "0. Salir\n\n" +
+    "El total a pagar es: " + precioTotal(carrito) + " soles"
 
     let todoBien = false
     let eleccion = -1
@@ -116,84 +121,7 @@ function precioTotal(carrito) {
         return 0
     } else {
         let sumaPrecios = 0
-        carrito.forEach((producto) => sumaPrecios += producto.precio)
+        carrito.forEach((producto) => sumaPrecios += producto.precio * producto.cantidad)
         return sumaPrecios
     }
 }
-
-//CODIGO FUNADO 💀
-/* function agregarManzanas(precioTotal) {
-    let todoBien = false
-    let cantidadManzanas = 0
-
-    while (!todoBien) {
-        todoBien = true
-        cantidadManzanas = Number(prompt("¿Cuántas manzanas desea agregar?"))
-
-        if (cantidadManzanas < 0 || isNaN(cantidadManzanas)) {
-            alert("Debe ingresar un número mayor o igual a 0")
-            todoBien = false
-        }
-    }
-
-    precioTotal += cantidadManzanas * 1.00
-    return precioTotal
-}
-
-function agregarNaranjas(precioTotal) {
-    let todoBien = false
-    let cantidadNaranjas = 0
-
-    while (!todoBien) {
-        todoBien = true
-        cantidadNaranjas = prompt("¿Cuántas naranjas desea agregar?")
-
-        if (cantidadNaranjas < 0 || isNaN(cantidadNaranjas)) {
-            alert("Debe ingresar un número mayor o igual a 0")
-            todoBien = false
-        }
-    }
-
-    precioTotal += cantidadNaranjas * 0.80
-    return precioTotal
-}
-
-function agregarPapayas(precioTotal) {
-    let todoBien = false
-    let cantidadPapayas = 0
-
-    while (!todoBien) {
-        todoBien = true
-        cantidadPapayas = prompt("¿Cuántas papayas desea agregar?")
-
-        if (cantidadPapayas < 0 || isNaN(cantidadPapayas)) {
-            alert("Debe ingresar un número mayor o igual a 0")
-            todoBien = false
-        }
-    }
-
-    precioTotal += cantidadPapayas * 2.00
-    return precioTotal
-}
-
-function agregarPlatanos(precioTotal) {
-    let todoBien = false
-    let cantidadPlatanos = 0
-
-    while (!todoBien) {
-        todoBien = true
-        cantidadPlatanos = prompt("¿Cuántas plátanos desea agregar?")
-
-        if (cantidadPlatanos < 0 || isNaN(cantidadPlatanos)) {
-            alert("Debe ingresar un número mayor o igual a 0")
-            todoBien = false
-        }
-    }
-
-    precioTotal += cantidadPlatanos * 0.50
-    return precioTotal
-} 
-
-function noEsNumero(valor) {
-    return typeof valor !== 'number'
-} */
