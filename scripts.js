@@ -1,7 +1,11 @@
 //CARRITO DE COMPRAS
-//1. Dar al usuario la opción de elegir articulos de un listado
-//Cada uno tiene su precio y se puede indicar la cantidad a llevar
-//2. Acumular el monto total en una variable (float)
+//1. Crear un menu que permita al usuario las siguientes opciones:
+    //1. Agregar productos al carrito
+        // Elegir producto del listado e indicar cantidad
+    //2. Retirar productos del carrito (splice)
+        // Indicar número de item a eliminar
+    //3. Hacer la cuenta y salir
+        // Sumar precio total, peso total y listar cantidad por producto
 
 let manzana = {
     id: 1,
