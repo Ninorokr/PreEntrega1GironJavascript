@@ -146,6 +146,8 @@ function agregarProductoAlCarrito(inputUsuario, carrito, catalogo) {
 function nuevoItemAgregado(item, cantidad) {
     //Esta funcion agrega propiedades al item agregado al carrito
     item.cantidad = cantidad
+    item.pesoTotal = item.peso * item.cantidad
+    item.costoTotal = item.precio * item.cantidad
 }
 
 function precioTotal(carrito) {
@@ -205,7 +207,7 @@ function iterarProductosDeCarrito(carrito) {
         console.log(prod)
         for (let prop in prod) {
             console.log(prop)
-            mensaje += prod[prop] + " | "
+            mensaje += prop + ": " + prod[prop] + " | "
         }
         mensaje += "\n"
     })
