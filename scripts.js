@@ -50,7 +50,7 @@ function main() {
             bucle = false
         } else {
             agregarProductoAlCarrito(inputUsuario, carrito, catalogo)
-            console.table(carrito)
+            //console.table(carrito)
         }
     } while (bucle)
 
@@ -106,7 +106,7 @@ function agregarProductoAlCarrito(inputUsuario, carrito, catalogo) {
         item.cantidad += cantidad
     } else {
         // SI EL PRODUCTO NO ESTÁ EN EL CARRITO, AGREGAR PRODUCTO
-        console.log("idProducto = " + inputUsuario)
+        //console.log("idProducto = " + inputUsuario)
         item = catalogo.find((producto) => producto["id"] == inputUsuario)
         //let nuevoItem = nuevoItemAgregado(item, cantidad)
         item.cantidad = cantidad
