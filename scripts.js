@@ -41,30 +41,58 @@ function main() {
     let catalogo = [manzana, naranja, papaya, platano]
     let carrito = []
     
-    let bucle = true;
+    let buclePrincipal = true
+    
+    do {
+        let eleccion = Number(prompt(menuPrincipal()))
+
+        switch (eleccion) {
+            case 0: buclePrincipal = false; break
+            case 1: comprar(catalogo, carrito); break
+            case 2: verCarrito(carrito); break
+            case 3: quitarProductos(); break
+            case 4: cuenta(); buclePrincipal = false; break
+            default: alert("Opción incorrecta")
+        }
+    } while (buclePrincipal)
+    
+
+    alert("¡Gracias por comprar con nosotros!")
+}
+
+function menuPrincipal() {
+    let menu = "BIENVENIDO/A al mercado \"3 de Enero\"\n" +
+                        "1. Agregar productos al carrito\n" + 
+                        "2. Ver carrito\n" + 
+                        "3. Retirar productos del carrito\n" + 
+                        "4. Hacer la cuenta\n" +
+                        "0. Salir"
+
+    return menu
+}
+
+function comprar(catalogo, carrito) {
+    let bucle = true
 
     do {
-        let inputUsuario = elegirDelMenu(catalogo, carrito)
+        let inputUsuario = elegirDelCatalogo(catalogo, carrito)
 
         if (inputUsuario == 0) {
             bucle = false
         } else {
             agregarProductoAlCarrito(inputUsuario, carrito, catalogo)
-            console.table(carrito)
         }
     } while (bucle)
-
-    alert("¡Gracias por comprar con nosotros!")
 }
 
-function elegirDelMenu(catalogo, carrito) {
+function elegirDelCatalogo(catalogo, carrito) {
     let menu = "Elige un producto a agregar al carrito:\n"
 
     catalogo.forEach((prod) => {
         menu += prod.id + ". " + prod.nombre + "\t\tS/. " + prod.precio + "\n"
     })
 
-    menu += "0. Salir\n\n" +
+    menu += "0. Regresar\n\n" +
     "El total a pagar es: " + precioTotal(carrito) + " soles"
 
     let todoBien = false
@@ -128,4 +156,64 @@ function precioTotal(carrito) {
         carrito.forEach((producto) => sumaPrecios += producto.precio * producto.cantidad)
         return sumaPrecios
     }
+}
+
+function verCarrito(carrito) {
+    //Menu de carrito
+        //Mostrar carrito tal y cual está
+        //1. Ordenar según: Precio, cantidad o peso (ASC o DESC)
+            //1. Precio total
+                //1. ASC
+                //2. DESC
+            //2. Cantidad total
+                //1. ASC
+                //2. DESC
+            //3. Peso total
+                //1. ASC
+                //2. DESC
+        //2. Salir
+
+    let menu = "1. Ordenar\n" +
+                "0. Regresar"
+
+    let mensaje = iterarProductosDeCarrito(carrito) + "\n" + menu
+
+    if (carrito.length == 0) {
+        alert("¡El carrito está vacío!")
+    } else {
+        let bucle = true
+
+        do {
+            let eleccion = Number(prompt(mensaje))
+
+            switch(eleccion) {
+                case 0: bucle = false; break
+                case 1: ordenarCarrito(); break
+                default: alert("Opción incorrecta")
+            }
+        } while (bucle)
+    }
+}
+
+function iterarProductosDeCarrito(carrito) {
+    console.table(carrito)
+    let mensaje = ""
+
+    // mensaje += carrito[0]
+
+    carrito.forEach((prod) => {
+        console.log(prod)
+        for (let prop in prod) {
+            console.log(prop)
+            mensaje += prod[prop] + " | "
+        }
+        mensaje += "\n"
+    })
+
+    return mensaje
+}
+
+function hacerCuenta() {
+    //
+    //Iterar por cada uno de 
 }
