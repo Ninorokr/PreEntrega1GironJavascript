@@ -27,7 +27,7 @@ function main() {
             case 0: buclePrincipal = false; break
             case 1: comprar(carrito); break
             case 2: verCarrito(carrito); break
-            case 3: quitarProductos(); break
+            case 3: quitarProductosCarrito(carrito); break
             case 4: cuenta(); buclePrincipal = false; break
             default: alert("Opción incorrecta")
         }
@@ -178,8 +178,6 @@ function verCarrito(carrito) {
         pesoTotalProducto: prod.pesoTotalProducto,
         costoTotalProducto: prod.costoTotalProducto
     }})
-    console.table(carrito)
-    console.table(carritoTemp)
 
     if (carritoTemp.length == 0) {
         alert("¡El carrito está vacío!")
@@ -205,13 +203,13 @@ function verCarrito(carrito) {
 }
 
 function iterarProductosDeCarrito(carrito) {
-    console.table(carrito)
+    //console.table(carrito)
     let mensaje = ""
 
     carrito.forEach((prod) => {
-        console.log(prod)
+        //console.log(prod)
         for (let prop in prod) {
-            console.log(prop)
+            //console.log(prop)
             switch(prop) {
                 case "peso": case "pesoTotalProducto": mensaje += prop + ": " + prod[prop] + " kgs. | "; break
                 case "precio": case "costoTotalProducto": mensaje += prop + ": S/. " + prod[prop] + " | "; break
@@ -305,6 +303,10 @@ function comparadorStrings(a, b, prop, asc) {
     }
 
     return 0;
+}
+
+function quitarProductosCarrito(carrito) {
+    
 }
 
 function hacerCuenta() {
