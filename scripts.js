@@ -15,7 +15,7 @@ var catalogo = [{id: 1, nombre: "Manzanas", peso: 0.200, precio: 1.00},
 main()
 
 function main() {
-    //let catalogo = [manzana, naranja, papaya, platano]
+
     let carrito = []
     
     let buclePrincipal = true
@@ -115,7 +115,6 @@ function agregarProductoAlCarrito(inputUsuario, carrito) {
         item.costoTotalProducto = Math.round(item.precio * item.cantidad * 100) / 100
     } else {
         // SI EL PRODUCTO NO ESTÁ EN EL CARRITO, AGREGAR PRODUCTO
-        //console.log("idProducto = " + inputUsuario)
         let catalogoTemp = catalogo.map((prod) => { return {
             id: prod.id,
             nombre: prod.nombre,
@@ -124,11 +123,8 @@ function agregarProductoAlCarrito(inputUsuario, carrito) {
         }})
         item = catalogoTemp.find((producto) => producto["id"] == inputUsuario)
         let nuevoItem = nuevoItemAgregado(item, cantidad)
-        //item.cantidad = cantidad
         carrito.push(nuevoItem)
-        //console.table(carrito)
     }
-
 }
 
 function nuevoItemAgregado(item, cantidad) {
@@ -147,7 +143,6 @@ function precioTotal(carrito) {
     } else {
         let sumaPrecios = 0
         carrito.forEach((producto) => {
-            //console.log(producto)
             sumaPrecios += producto.precio * producto.cantidad
         })
         return sumaPrecios
@@ -185,8 +180,6 @@ function verCarrito(carrito) {
         let menu = "1. Ordenar\n" +
                     "\n0. Regresar"
 
-    //let mensaje = iterarProductosDeCarrito(carritoTemp) + "\n" + menu
-
         let bucle = true
 
         do {
@@ -203,35 +196,24 @@ function verCarrito(carrito) {
 }
 
 function iterarProductosDeCarrito(carrito) {
-    //console.table(carrito)
     let mensaje = ""
 
     carrito.forEach((prod) => {
-        //console.log(prod)
         for (let prop in prod) {
-            //console.log(prop)
             switch(prop) {
                 case "peso": case "pesoTotalProducto": mensaje += prop + ": " + prod[prop] + " kgs. | "; break
                 case "precio": case "costoTotalProducto": mensaje += prop + ": S/. " + prod[prop] + " | "; break
                 case "cantidad": mensaje += prop + ": " + prod[prop] + " unid. | "; break
                 default: mensaje += prop + ": " + prod[prop] + " | "; break
-            }
-            
+            } 
         }
         mensaje += "\n\n"
     })
-
     return mensaje
 }
 
 function ordenarCarrito(carrito) {
-
-    //let flag = true
-    /* let carritoTemp = carrito.map((prod) => {
-        return {
-            prod
-        }
-    }) */
+    
         let eleccion = Number(prompt("Ordenar según: \n" + 
                                 "1. Id\n" + 
                                 "2. Nombre de producto\n" + 
@@ -306,7 +288,37 @@ function comparadorStrings(a, b, prop, asc) {
 }
 
 function quitarProductosCarrito(carrito) {
-    
+    while (true) {
+        let msj = "¿Qué producto deseas remover?\n\n" +
+            iterarProductosDeCarrito(carrito)
+
+        let i = 1
+
+        carrito.forEach((prod) => {
+            msj += i++ + ". " + prod.nombre + "\n"
+        })
+
+        msj += "\n0. Regresar"
+
+        let eleccion = Number(prompt(msj))
+
+        if (eleccion == 0) {
+            break;
+        } else {
+                let max = carrito[eleccion - 1].cantidad
+                let numero = Number(prompt("¿Cuántos deseas eliminar? Cantidad: " + max))
+
+                if (numero < 0 || numero > max || isNaN(numero)) {
+                    alert("Elegir un número entre 0 y " + max)
+                } else {
+                    if (numero == max) {
+                        carrito.splice(eleccion - 1, 1)
+                    } else {
+                        carrito[eleccion - 1].cantidad -= numero
+                    }
+                }
+        }
+    }
 }
 
 function hacerCuenta() {
