@@ -10,7 +10,11 @@
 var catalogo = [{id: 1, nombre: "Manzanas", peso: 0.200, precio: 1.00}, 
 {id: 2, nombre: "Naranjas", peso: 0.180, precio: 0.60}, 
 {id: 3, nombre: "Papayas", peso: 2.000, precio: 2.00},
-{id: 4, nombre: "Plátanos", peso: 0.150, precio: 0.50}]
+{id: 4, nombre: "Plátanos", peso: 0.150, precio: 0.50},
+{id: 5, nombre: "Mangos", peso: 0.350, precio: 1.20},
+{id: 6, nombre: "Duraznos", peso: 0.100, precio: 0.30},
+{id: 7, nombre: "Fresas", peso: 0.005, precio: 0.05},
+{id: 8, nombre: "Palta", peso: 0.450, precio: 1.80}]
 
 main()
 
@@ -26,9 +30,9 @@ function main() {
         switch (eleccion) {
             case 0: buclePrincipal = false; break
             case 1: comprar(carrito); break
-            case 2: verCarrito(carrito); break
-            case 3: quitarProductosCarrito(carrito); break
-            case 4: cuenta(); buclePrincipal = false; break
+            case 2: quitarProductosCarrito(carrito); break
+            case 3: verCarrito(carrito); break
+            //case 4: cuenta(); buclePrincipal = false; break
             default: alert("Opción incorrecta")
         }
     } while (buclePrincipal)
@@ -39,9 +43,8 @@ function main() {
 function menuPrincipal() {
     let menu = "BIENVENIDO/A al mercado \"3 de Enero\"\n\n" +
                         "1. Agregar productos al carrito\n" + 
-                        "2. Ver carrito\n" + 
-                        "3. Retirar productos del carrito\n" + 
-                        "4. Hacer la cuenta\n" +
+                        "2. Retirar productos del carrito\n" + 
+                        "3. Ver carrito y pagar\n" +
                         "\n0. Salir"
 
     return menu
@@ -177,18 +180,33 @@ function verCarrito(carrito) {
     if (carritoTemp.length == 0) {
         alert("¡El carrito está vacío!")
     } else {
-        let menu = "1. Ordenar\n" +
+        let menu = "1. Ordenar productos\n" +
+                    "2. Pagar total\n" +
                     "\n0. Regresar"
 
         let bucle = true
 
         do {
-            let mensaje = iterarProductosDeCarrito(carritoTemp) + menu
+            let sumaTotalCarrito = 0
+            let pesoTotalCarrito = 0
+
+            carrito.forEach((prod) => {
+                sumaTotalCarrito += prod.costoTotalProducto
+                pesoTotalCarrito += prod.pesoTotalProducto
+            })
+
+            let totales = "Peso total del carrito: " + pesoTotalCarrito + " kgs.\n" +
+                        "Costo total del carrito: S/. " + sumaTotalCarrito + "\n\n"
+
+            let mensaje = iterarProductosDeCarrito(carritoTemp) + totales + menu
             let eleccion = Number(prompt(mensaje))
 
             switch(eleccion) {
                 case 0: bucle = false; break
                 case 1: carritoTemp = ordenarCarrito(carritoTemp); break
+                case 2: alert("Gracias!!! 😜");
+                    carrito.splice(0, carrito.length);
+                    carritoTemp.splice(0, carritoTemp.splice); break
                 default: alert("Opción incorrecta")
             }
         } while (bucle)
@@ -305,25 +323,20 @@ function quitarProductosCarrito(carrito) {
         if (eleccion == 0) {
             break;
         } else {
-                let max = carrito[eleccion - 1].cantidad
-                let numero = Number(prompt("¿Cuántos deseas eliminar? Cantidad: " + max))
+            let max = carrito[eleccion - 1].cantidad
+            let numero = Number(prompt("¿Cuántos deseas eliminar? Cantidad: " + max))
 
-                if (numero < 0 || numero > max || isNaN(numero)) {
-                    alert("Elegir un número entre 0 y " + max)
+            if (numero < 0 || numero > max || isNaN(numero)) {
+                alert("Elegir un número entre 0 y " + max)
+            } else {
+                if (numero == max) {
+                    carrito.splice(eleccion - 1, 1)
                 } else {
-                    if (numero == max) {
-                        carrito.splice(eleccion - 1, 1)
-                    } else {
-                        carrito[eleccion - 1].cantidad -= numero
-                    }
+                    carrito[eleccion - 1].cantidad -= numero
                 }
+            }
         }
     }
-}
-
-function hacerCuenta() {
-    //
-    //Iterar por cada uno de 
 }
 
 //CÓDIGO FUNADO 💀
